@@ -16,17 +16,10 @@ def calcAnswer(question):
     with open("intents.json") as file:
         data = json.load(file)
 
-    # try:
-    #     with open("data.pickle", "rb") as f:
-    #         dictionary, classes, training, output = pickle.load(f)
-    #         f.close()
-
-    # except:
-
     dictionary = []
     classes = []
 
-    #####CREACIO DE DICCIONARI##################################################################
+    #####CREACIÓ DE DICCIONARI##################################################################
     for intent in data["intents"]:
         for pattern in intent["patterns"]:
             # funcio que concatena les paraules en una llista
@@ -92,9 +85,6 @@ def calcAnswer(question):
 
         training[j] = bag_of_words
 
-    # with open("data.pickle", "wb") as f:
-    #     pickle.dump((dictionary, classes, training, output), f)
-    #     f.close()
 
     ############################################################################################
     ###########################  MODEL DE DEEP LEARNING  #######################################
@@ -113,11 +103,11 @@ def calcAnswer(question):
     # model.summary()
 
     try:
-        new_model = tf.keras.models.load_model('chatbot-mauri.model')
+        new_model = tf.keras.models.load_model('chatbot.model')
 
     except:
         model.fit(training, output, epochs=300)
-        model.save('chatbot-mauri.model')
+        model.save('chatbot.model')
         new_model = model
 
     ############################################################################################
@@ -152,6 +142,6 @@ def calcAnswer(question):
 
     else:
         responses = ["No he entendido lo que has dicho, aún estoy aprendiendo :), mejor intentalo de nuevo",
-                     "Soy un Bot...no té he entendido, mejor prueba de nuevo! :)", "No pilleé lo que ahs dicho :(, porfa intentatalo otra vez!"]
+                     "Soy un Bot...no té he entendido, mejor prueba de nuevo! :)", "No pillé lo que has dicho :(, porfa intentalo otra vez!"]
 
     return random.choice(responses)
